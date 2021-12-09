@@ -18,16 +18,15 @@ Explanation: Intervals [1,4] and [4,5] are considered overlapping.
 		if (intervals.length <= 1)
 			return intervals;
 
-		// Sort by ascending starting point
 		Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[0], i2[0]));
 
 		List<int[]> result = new ArrayList<>();
 		int[] newInterval = intervals[0];
 		result.add(newInterval);
 		for (int[] interval : intervals) {
-			if (interval[0] <= newInterval[1]) // Overlapping intervals, move the end if needed
+			if (interval[0] <= newInterval[1]) 
 				newInterval[1] = Math.max(newInterval[1], interval[1]);
-			else {                             // Disjoint intervals, add the new interval to the list
+			else {                            
 				newInterval = interval;
 				result.add(newInterval);
 			}
