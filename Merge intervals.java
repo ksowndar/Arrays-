@@ -13,25 +13,33 @@ Input: intervals = [[1,4],[4,5]]
 Output: [[1,5]]
 Explanation: Intervals [1,4] and [4,5] are considered overlapping.
   
-  class Solution {
-	public int[][] merge(int[][] intervals) {
-		if (intervals.length <= 1)
-			return intervals;
-
-		Arrays.sort(intervals, (i1, i2) -> Integer.compare(i1[0], i2[0]));
-
-		List<int[]> result = new ArrayList<>();
-		int[] newInterval = intervals[0];
-		result.add(newInterval);
-		for (int[] interval : intervals) {
-			if (interval[0] <= newInterval[1]) 
-				newInterval[1] = Math.max(newInterval[1], interval[1]);
-			else {                            
-				newInterval = interval;
-				result.add(newInterval);
-			}
-		}
-
-		return result.toArray(new int[result.size()][]);
-	}
+ class Solution {
+    public int[][] merge(int[][] intervals)
+    {
+        List<int[]> res=new ArrayList<>();
+        
+        if(intervals==null || intervals.length==0)
+            return res.toArray(new int[0][]);
+        
+        Arrays.sort(intervals,(a,b)->a[0] - b[0]);
+        
+        int start=intervals[0][0];
+        int end=intervals[0][1];
+        
+        for(int[] i:intervals)
+        {
+            if(i[0]<=end)
+            {
+                end=Math.max(end,i[1]);
+            }
+            else
+            {
+                res.add(new int[]{start,end});
+                start=i[0];
+                end=i[1];
+            }
+        }
+        res.add(new int[]{start,end});
+        return res.toArray(new int[0][]);
+    }
 }
